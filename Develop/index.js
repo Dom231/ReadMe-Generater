@@ -3,12 +3,13 @@
 const inquirer  = require("inquirer");
 const fs = require('fs');
 
+
 // TODO: Create an array of questions for user input
 const questions = [
     "What is your Project's title ?",
     "Provide a description of your project",
     "Provide Installation Instructions",
-    "Provide User Information",
+    "Provide Usage Information",
     "Provide Contribution Guidelines",
     "Provide Test Instructions ",
     "What License is used for the application (if applicable) ?",
@@ -17,17 +18,31 @@ const questions = [
 ];
 
 
-const generateReadMe = ({title,instal,description,userinfo,test,lisence,github,email}) =>
+
+//this will provide the bage links for the Licenses 
+
+const badge = [
+    "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+    "[![License](https://img.shields.io/badge/License-EPL_1.0-red.svg)](https://opensource.org/licenses/EPL-1.0)",
+    "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+    "  0   "
+]
+
+
+//This will build a frame work for the ReadMe file
+
+const generateReadMe = ({title,instal,description,userinfo,test,Li,bage,github,email}) =>
 `
-# ${title}
+# ${title} 
 
+## ${Li}
 
-## table of content
+## Table of content
   * [Description](#description)
   * [Installation](#installation)
-  * [User-Information](#user-information)
-  * [Contribution-Guidelines](#contribution-guidelines)
-  * [Test-Instructions](#test-instructions)
+  * [Usage](#usage)
+  * [Contributing](#contributing)
+  * [Tests](#tests)
   * [License](#license)
   * [Questions](#questions)
 
@@ -41,7 +56,7 @@ ${description}
 ${instal}
 
 
-## User-Information
+## Usage-Information
 
 ${userinfo}
 
@@ -49,18 +64,22 @@ ${userinfo}
 
 ${test}
 
-## License
-
-${lisence}
-
 ## Questions
 
-* ${github}
-* ${email}
+* link to my github:  https://github.com/${github}/
+* If you have any questions you can contact me at the following email: ${email}
 
 
 `;
 
+// this will create the section for the Lisence section
+const generateLicense = 
+`
+## Lisence
+
+The license used in this application is`;
+
+//this will add questions for the user to answer, this information will be used for the ReadMe
  inquirer
    .prompt([
         {
@@ -93,10 +112,12 @@ ${lisence}
             name: 'test',
             message: questions[5],
           },
+     
           {
-            type: 'input',
-            name: 'license',
+            type: 'list',
             message: questions[6],
+            name: 'Li',
+            choices:['MIT','Eclipse','Apache',"No License used"]
           },
           {
             type: 'input',
@@ -110,21 +131,61 @@ ${lisence}
           },
 
     ])
-    .then((answers) => {
+
+    // look at notes and see if there is a way to add data to your construct mam
+   
+       
+   
+    .then((answers) => { 
+
+        if(answers.Li == 'MIT'){
+            answers.Li = badge[0];
+           
+            
+        }else if(answers.Li == 'Eclipse'){
+             answers.Li = badge[1];
+            
+        
+        }else if(answers.Li == 'Apache'){
+            answers.Li = badge[2]
+            
+        }else{
+            
+            answers.Li == badge[3];
+        }
+
+
+       
         const readMeContent = generateReadMe(answers)
+       
         fs.writeFile('ReadMe.md', readMeContent, 
         (err) => err ? console.log(err) : console.log('Sucessfuly created ReadMe.md')
         )
 
+
+        if(answers.Li == badge[0]){
+            answers.Li = 'MIT';
+           
+            
+        }else if(answers.Li == badge[1]){
+             answers.Li = 'Eclipse';
+            
+        
+        }else if(answers.Li == badge[2]){
+            answers.Li = 'Apache'
+            
+        }else{
+            answers.Li == ':No license Used ';
+        }
+
+        fs.appendFile('ReadME.md', `${generateLicense +" " +answers.Li}`  , (err) =>
+        // TODO: Describe how this ternary operator works
+        err ? console.error(err) : console.log('Commit logged!')
+      );
+      
+
+
+
+        
+
     });
-
-
-
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
-init();

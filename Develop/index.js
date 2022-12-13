@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 
 const inquirer  = require("inquirer");
+const fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -14,6 +15,51 @@ const questions = [
     "what is your GitHub user name ?",
     'What is your email ?'
 ];
+
+
+const generateReadMe = ({title,instal,description,userinfo,test,lisence,github,email}) =>
+`
+# ${title}
+
+
+## table of content
+  * [Description](#description)
+  * [Installation](#installation)
+  * [User-Information](#user-information)
+  * [Contribution-Guidelines](#contribution-guidelines)
+  * [Test-Instructions](#test-instructions)
+  * [License](#license)
+  * [Questions](#questions)
+
+
+## Description
+
+${description}
+
+## Installation  
+
+${instal}
+
+
+## User-Information
+
+${userinfo}
+
+## Test-Instructions
+
+${test}
+
+## License
+
+${lisence}
+
+## Questions
+
+* ${github}
+* ${email}
+
+
+`;
 
  inquirer
    .prompt([
@@ -29,7 +75,7 @@ const questions = [
           },
           {
             type: 'input',
-            name: 'installation',
+            name: 'instal',
             message: questions[2],
           },
           {
@@ -64,49 +110,15 @@ const questions = [
           },
 
     ])
+    .then((answers) => {
+        const readMeContent = generateReadMe(answers)
+        fs.writeFile('ReadMe.md', readMeContent, 
+        (err) => err ? console.log(err) : console.log('Sucessfuly created ReadMe.md')
+        )
 
-const generateReadMe = ({title,description,userinfo,test,lisence,github,email}) =>
-`
-# ${title}
-
-
-## table of content
-  * [Description](#description)
-  * [Installation](#instalation)
-  * [User Information](#user information)
-  * [Contribution Guidelines](#contribution guidelines)
-  * [Test Instructions](#test instructions)
-  * [License](#license)
-  * [Questions](#questions)
+    });
 
 
-## Description
-
-${description}
-
-## Installation  
-
-${installation}
-
-## User Information
-
-${userinfo}
-
-## Test Instructions
-
-${test}
-
-## License
-
-${lisence}
-
-## Questions
-
-${github}
-${email}
-
-
-`;
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {}

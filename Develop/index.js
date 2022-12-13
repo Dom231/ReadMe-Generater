@@ -34,7 +34,7 @@ const questions = [
           },
           {
             type: 'input',
-            name: 'user-info',
+            name: 'userinfo',
             message: questions[3],
           },
           {
@@ -65,15 +65,45 @@ const questions = [
 
     ])
 
-const generateReadMe = () =>
+const generateReadMe = ({title,description,userinfo,test,lisence,github,email}) =>
 `
-#title
+# ${title}
 
-##table of contet
+
 ## table of content
-  * [](#your-task)
-  * [User Story](#user-story)
+  * [Description](#description)
+  * [Installation](#instalation)
+  * [User Information](#user information)
+  * [Contribution Guidelines](#contribution guidelines)
+  * [Test Instructions](#test instructions)
+  * [License](#license)
+  * [Questions](#questions)
 
+
+## Description
+
+${description}
+
+## Installation  
+
+${installation}
+
+## User Information
+
+${userinfo}
+
+## Test Instructions
+
+${test}
+
+## License
+
+${lisence}
+
+## Questions
+
+${github}
+${email}
 
 
 `;

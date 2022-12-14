@@ -40,7 +40,7 @@
 * [ReadMe.md](https://github.com/Dom231/ReadMe-Generater/files/10224093/ReadMe.md)
 
 
-##pictures of the application 
+## pictures of the application 
 ![Capture_Read](https://user-images.githubusercontent.com/114959233/207500454-a948cc51-2553-4214-868b-fdff36efc117.PNG)
 
 ![Capture_read2](https://user-images.githubusercontent.com/114959233/207500466-4590ee4b-a5ff-4878-8984-320a4b121195.PNG)
